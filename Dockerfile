@@ -19,6 +19,8 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+RUN apk add --no-cache coreutils iproute2 procps
+
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
