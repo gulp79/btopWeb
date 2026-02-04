@@ -10,7 +10,7 @@ function formatBps(bps: number): string {
   const k = 1024;
   const sizes = ['B/s', 'KB/s', 'MB/s', 'GB/s'];
   const i = Math.floor(Math.log(bps) / Math.log(k));
-  return `${(bps / Math.pow(k, i)).toFixed(2)} ${sizes[i]}`;
+  return `${((bps ?? 0) / Math.pow(k, i)).toFixed(2)} ${sizes[i]}`;
 }
 
 function formatBytes(bytes: number): string {
@@ -18,7 +18,7 @@ function formatBytes(bytes: number): string {
   const k = 1024;
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${(bytes / Math.pow(k, i)).toFixed(2)} ${sizes[i]}`;
+  return `${((bytes ?? 0) / Math.pow(k, i)).toFixed(2)} ${sizes[i]}`;
 }
 
 export default function NetworkPanel({ data }: NetworkPanelProps) {
