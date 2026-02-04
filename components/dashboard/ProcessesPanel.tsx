@@ -160,10 +160,10 @@ export default function ProcessesPanel({ data }: ProcessesPanelProps) {
                   {proc.command}
                 </td>
                 <td className="p-2 text-right text-green-400 font-semibold">
-                  {proc.cpu.toFixed(1)}
+                  {(proc.cpu ?? 0).toFixed(1)}
                 </td>
                 <td className="p-2 text-right text-blue-400 font-semibold">
-                  {proc.mem.toFixed(1)}
+                  {(proc.mem ?? 0).toFixed(1)}
                 </td>
                 <td className="p-2 text-right text-gray-300">
                   {proc.rssMB}M
