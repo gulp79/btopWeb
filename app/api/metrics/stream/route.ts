@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET() {
   const encoder = new TextEncoder();
+  let intervalId: NodeJS.Timeout;
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -37,20 +38,30 @@ export async function GET() {
           };
 
           const message = `data: ${JSON.stringify(data)}\n\n`;
+          
+          // Tentiamo l'invio. Se il controller è chiuso, Node 25+ lancerà un errore.
           controller.enqueue(encoder.encode(message));
-        } catch (error) {
-          console.error('Error collecting metrics:', error);
+        } catch (error: any) {
+          // Se lo stream è chiuso, fermiamo l'intervallo ed evitiamo il log di errore
+          if (error.code === 'ERR_INVALID_STATE' || error.message?.includes('closed')) {
+            clearInterval(intervalId);
+          } else {
+            console.error('Error collecting metrics:', error);
+          }
         }
       };
 
+      // Primo invio immediato
       await sendMetrics();
-      const interval = setInterval(sendMetrics, 1000);
-
-      const cleanup = () => {
-        clearInterval(interval);
-      };
-
-      return cleanup;
+      
+      // Setup dell'intervallo
+      intervalId = setInterval(sendMetrics, 1000);
+    },
+    cancel() {
+      // Questo metodo viene chiamato automaticamente quando il browser chiude la connessione
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
     },
   });
 
