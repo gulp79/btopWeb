@@ -10,7 +10,7 @@ function formatBytes(bytes: number): string {
   const k = 1024;
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
+  return `${((bytes ?? 0) / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
 }
 
 export default function SwapPanel({ data }: SwapPanelProps) {
@@ -47,7 +47,7 @@ export default function SwapPanel({ data }: SwapPanelProps) {
           <div className="flex justify-between mb-1">
             <span className="text-gray-400">Used</span>
             <span className="text-cyan-400 font-semibold">
-              {formatBytes(data.used)} ({usedPct.toFixed(1)}%)
+              {formatBytes(data.used)} ({(usedPct ?? 0).toFixed(1)}%)
             </span>
           </div>
           <div className="h-4 bg-gray-900 rounded overflow-hidden border border-gray-800">
