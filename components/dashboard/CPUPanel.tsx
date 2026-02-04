@@ -40,7 +40,7 @@ export default function CPUPanel({ data }: CPUPanelProps) {
           <div className="mb-4">
             <div className="flex justify-between text-sm mb-1">
               <span className="text-gray-400">Total Usage</span>
-              <span className="text-cyan-400 font-semibold">{data.totalPct.toFixed(1)}%</span>
+              <span className="text-cyan-400 font-semibold">{(data.totalPct ?? 0).toFixed(1)}%</span>
             </div>
             <div className="h-6 bg-gray-900 rounded-full overflow-hidden border border-gray-700">
               <div
@@ -60,7 +60,7 @@ export default function CPUPanel({ data }: CPUPanelProps) {
                       <span className="text-gray-600">{data.freqMHz[i]} MHz</span>
                     )}
                     <span className="text-cyan-400 font-semibold w-12 text-right">
-                      {pct.toFixed(1)}%
+                      {(pct ?? 0).toFixed(1)}%
                     </span>
                   </div>
                 </div>
@@ -81,15 +81,15 @@ export default function CPUPanel({ data }: CPUPanelProps) {
             <div className="flex gap-4 text-cyan-400 font-semibold">
               <div>
                 <div className="text-xs text-gray-500">1min</div>
-                <div>{data.loadAvg[0].toFixed(2)}</div>
+                <div>{((data.loadAvg[0] ?? 0) ?? 0).toFixed(2)}</div>
               </div>
               <div>
                 <div className="text-xs text-gray-500">5min</div>
-                <div>{data.loadAvg[1].toFixed(2)}</div>
+                <div>{(data.loadAvg[1] ?? 0).toFixed(2)}</div>
               </div>
               <div>
                 <div className="text-xs text-gray-500">15min</div>
-                <div>{data.loadAvg[2].toFixed(2)}</div>
+                <div>{(data.loadAvg[2] ?? 0).toFixed(2)}</div>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function CPUPanel({ data }: CPUPanelProps) {
                   <div key={i} className="flex items-center gap-2">
                     <span className="text-xs text-gray-500">Zone {i}</span>
                     <span className={`font-semibold ${temp > 80 ? 'text-red-400' : temp > 60 ? 'text-yellow-400' : 'text-green-400'}`}>
-                      {temp.toFixed(1)}°C
+                      {(temp ?? 0).toFixed(1)}°C
                     </span>
                   </div>
                 ))}
