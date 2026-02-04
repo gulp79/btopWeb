@@ -10,7 +10,7 @@ function formatBytes(bytes: number): string {
   const k = 1024;
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
+  return `${((bytes ?? 0) / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
 }
 
 export default function DisksPanel({ data }: DisksPanelProps) {
@@ -75,7 +75,7 @@ export default function DisksPanel({ data }: DisksPanelProps) {
 
               <div className="flex justify-between text-xs">
                 <span className="text-gray-500">
-                  {usedPct.toFixed(1)}% used
+                  {(usedPct ?? 0).toFixed(1)}% used
                 </span>
                 <span className="text-gray-500">
                   {formatBytes(disk.avail)} free
